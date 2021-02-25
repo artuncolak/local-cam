@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Spinner } from "react-bootstrap";
+import "./Webcam.scss";
 
 export default function Webcam() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,5 +38,7 @@ export default function Webcam() {
     return <h3 className="text-danger">{error}</h3>;
   }
 
-  return <video autoPlay ref={videoRef} className="rounded shadow"></video>;
+  return (
+    <video autoPlay ref={videoRef} className="rounded shadow webcam"></video>
+  );
 }

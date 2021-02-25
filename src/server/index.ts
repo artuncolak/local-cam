@@ -16,8 +16,9 @@ export default class Server {
     });
   }
 
-  async start() {
+  async start(): Promise<number> {
     const PORT = await getPort({ port: 5000 });
     this.app.listen(PORT, () => console.log("Listening"));
+    return PORT;
   }
 }
