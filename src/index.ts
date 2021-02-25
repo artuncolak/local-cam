@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from "electron";
+import Server from "./server";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 if (require("electron-squirrel-startup")) {
@@ -6,6 +7,10 @@ if (require("electron-squirrel-startup")) {
 }
 
 const createWindow = (): void => {
+  const server = new Server();
+
+  server.start();
+
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,

@@ -1,5 +1,7 @@
 const rules = require("./webpack.rules");
 const plugins = require("./webpack.plugins");
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 rules.push({
   test: /\.(scss|css)$/,
@@ -32,7 +34,17 @@ module.exports = {
   module: {
     rules,
   },
-  plugins: plugins,
+  plugins: [
+    ...plugins,
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src", "server/views"),
+          to: path.resolve(__dirname, ".webpack/main", "views"),
+        },
+      ],
+    }),
+  ],
   resolve: {
     extensions: [".js", ".ts", ".jsx", ".tsx", ".css"],
   },
