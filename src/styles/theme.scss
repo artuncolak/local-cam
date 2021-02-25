@@ -1,0 +1,8 @@
+@font-face {
+  font-family: montserrat;
+  src: url("./fonts/montserrat.woff2");
+}
+
+$font-family-sans-serif: "montserrat";
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
