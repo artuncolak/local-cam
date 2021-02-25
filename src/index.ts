@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import Server from "./server";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
@@ -19,7 +19,12 @@ const createWindow = (): void => {
     },
   });
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.webContents.openDevTools();
+
+  if (process.env.NODE_ENV === "development") {
+    mainWindow.webContents.openDevTools();
+  } else {
+    Menu.setApplicationMenu(null);
+  }
 };
 
 app.on("ready", createWindow);
