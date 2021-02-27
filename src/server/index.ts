@@ -56,8 +56,8 @@ class Server {
           address = item.address;
         }
       });
-    } else if (nets.Wifi) {
-      nets.Wifi.forEach((item) => {
+    } else if (nets["Wi-Fi"]) {
+      nets["Wi-Fi"].forEach((item) => {
         if (item.family === "IPv4" && !item.internal) {
           address = item.address;
         }
@@ -66,6 +66,8 @@ class Server {
 
     return address;
   }
+
+  //TODO: Stop fonksiyonunu düzelt
 
   // stop() {
   //   if (!this.httpServer) {
