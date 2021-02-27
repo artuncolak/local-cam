@@ -12,8 +12,9 @@ ipcMain.on("start-server", async (event, arg) => {
 });
 
 ipcMain.on("stop-server", async (event, arg) => {
+  //TODO: Yorum satırını sil
   try {
-    await server.stop();
+    //await server.stop();
     event.reply("response");
   } catch (error) {
     event.reply("error", error);

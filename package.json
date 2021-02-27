@@ -99,6 +99,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.6.0",
+    "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "electron-squirrel-startup": "^1.0.0",
     "express": "^4.17.1",

@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Controls from "./components/Controls";
 import Sidebar from "./components/Sidebar";
 import Webcam from "./components/Webcam";
 import serverService from "./services/serverService";
+import socketService from "./services/socketService";
 import WebcamContextProvider from "./WebcamContextProvider";
 
 export default function App() {
@@ -12,6 +13,18 @@ export default function App() {
   const [serverDetails, setServerDetails] = useState<string>();
 
   const webcamRef = useRef(null);
+
+  useEffect(() => {
+    const interval = setInterval(stream, 1000 / 60);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const stream = () => {
+    socketService.startStream(webcamRef.current.captureImage());
+  };
 
   const handleServer = async () => {
     setIsStarting(true);

@@ -30,9 +30,9 @@ const Webcam = forwardRef((props, ref) => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            width: { ideal: 4096 },
-            height: { ideal: 2160 },
-            frameRate: 60,
+            // width: { ideal: 4096 },
+            // height: { ideal: 2160 },
+            // frameRate: 60,
             deviceId: { ideal: webcamContext.id },
           },
         });

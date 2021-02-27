@@ -1,9 +1,11 @@
+import cors from "cors";
 import ejs from "ejs";
 import express, { Express } from "express";
 import getPort from "get-port";
 import { Server as HttpServer } from "http";
 import { networkInterfaces } from "os";
 import path from "path";
+import { Server as SocketServer } from "socket.io";
 
 interface ServerDetails {
   address: string;
@@ -12,7 +14,9 @@ interface ServerDetails {
 
 class Server {
   private app: Express;
-  private server: HttpServer;
+  private httpServer: HttpServer;
+  private io: SocketServer;
+  private port: number;
 
   constructor() {
     this.app = express();
@@ -21,6 +25,24 @@ class Server {
     this.app.set("views", path.join(__dirname, "/views"));
     this.app.get("/", (req, res) => {
       res.render("home");
+    });
+
+    this.httpServer = new HttpServer(this.app);
+    this.io = new SocketServer(this.httpServer, {
+      cors: {
+        origin: "*",
+      },
+    });
+
+    this.openSocket();
+  }
+
+  private openSocket(): void {
+    this.io.on("connection", (socket) => {
+      socket.on("start-stream", (data) => {
+        socket.broadcast.emit("start-stream", data);
+      });
+      console.log("Socket Connected!");
     });
   }
 
@@ -45,28 +67,27 @@ class Server {
     return address;
   }
 
-  stop() {
-    if (!this.server) {
-      throw new Error("Server is not started");
-    }
-    this.server.close();
-    this.server = null;
-  }
+  // stop() {
+  //   if (!this.httpServer) {
+  //     throw new Error("Server is not started");
+  //   }
+  //   this.server.close();
+  //   this.server = null;
+  // }
 
   async start(): Promise<ServerDetails> {
-    if (this.server) {
-      throw new Error("Server is already started");
-    }
-
     const address = this.getAddress();
 
     if (!address) {
       throw new Error("LAN cannot be established");
     }
 
-    const PORT = await getPort({ port: 5000 });
-    this.server = this.app.listen(PORT);
-    return { address, port: PORT };
+    if (!this.port) {
+      this.port = await getPort({ port: 5000 });
+    }
+
+    this.httpServer.listen(this.port);
+    return { address, port: this.port };
   }
 }
 
