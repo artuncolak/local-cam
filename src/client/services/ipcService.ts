@@ -6,6 +6,9 @@ function ipcService(channel): Promise<any> {
     ipcRenderer.on("response", (event, data) => {
       resolve(data);
     });
+    ipcRenderer.on("error", (event, error) => {
+      reject(error);
+    });
   });
 }
 

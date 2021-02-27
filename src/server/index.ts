@@ -1,10 +1,18 @@
-import express, { Express } from "express";
-import path from "path";
-import getPort from "get-port";
 import ejs from "ejs";
+import express, { Express } from "express";
+import getPort from "get-port";
+import { Server as HttpServer } from "http";
+import { networkInterfaces } from "os";
+import path from "path";
 
-export default class Server {
+interface ServerDetails {
+  address: string;
+  port: number;
+}
+
+class Server {
   private app: Express;
+  private server: HttpServer;
 
   constructor() {
     this.app = express();
@@ -16,9 +24,50 @@ export default class Server {
     });
   }
 
-  async start(): Promise<number> {
+  private getAddress(): string {
+    const nets = networkInterfaces();
+    let address;
+
+    if (nets.Ethernet) {
+      nets.Ethernet.forEach((item) => {
+        if (item.family === "IPv4" && !item.internal) {
+          address = item.address;
+        }
+      });
+    } else if (nets.Wifi) {
+      nets.Wifi.forEach((item) => {
+        if (item.family === "IPv4" && !item.internal) {
+          address = item.address;
+        }
+      });
+    }
+
+    return address;
+  }
+
+  stop() {
+    if (!this.server) {
+      throw new Error("Server is not started");
+    }
+    this.server.close();
+    this.server = null;
+  }
+
+  async start(): Promise<ServerDetails> {
+    if (this.server) {
+      throw new Error("Server is already started");
+    }
+
+    const address = this.getAddress();
+
+    if (!address) {
+      throw new Error("LAN cannot be established");
+    }
+
     const PORT = await getPort({ port: 5000 });
-    this.app.listen(PORT, () => console.log("Listening"));
-    return PORT;
+    this.server = this.app.listen(PORT);
+    return { address, port: PORT };
   }
 }
+
+export default new Server();

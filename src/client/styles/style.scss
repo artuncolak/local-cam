@@ -1,0 +1,27 @@
+@import "theme.scss";
+
+.server-details {
+  color: $link-color;
+  &:hover {
+    text-decoration: $link-hover-decoration;
+    color: $link-hover-color;
+    cursor: pointer;
+  }
+}
+
+.webcam {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.content {
+  margin-left: $sidebar-width;
+  height: calc(100% - 100px);
+}
+
+.controls-container {
+  margin-left: $sidebar-width;
+  min-height: 100px;
+}
+
+@import "../components/Sidebar/styles.scss";

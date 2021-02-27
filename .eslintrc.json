@@ -8,16 +8,23 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
   ],
   "settings": {
     "import/resolver": {
       "typescript": {}
     }
   },
+  "plugins": ["simple-import-sort"],
   "parser": "@typescript-eslint/parser",
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "react/display-name": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prefer-stateless-function": "warn",
+    "react/prop-types": "off"
   }
 }

@@ -1,28 +1,21 @@
 import { ipcMain } from "electron";
-import Server from "./server";
-import { networkInterfaces } from "os";
+
+import server from "./server";
 
 ipcMain.on("start-server", async (event, arg) => {
-  const server = new Server();
-  const port = await server.start();
+  try {
+    const serverDetails = await server.start();
+    event.reply("response", serverDetails);
+  } catch (error) {
+    event.reply("error", error);
+  }
+});
 
-  const nets = networkInterfaces();
-  // const results = Object.create(null); // Or just '{}', an empty object
-
-  // for (const name of Object.keys(nets)) {
-  //   for (const net of nets[name]) {
-  //     // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-  //     if (net.family === "IPv4" && !net.internal) {
-  //       if (!results[name]) {
-  //         results[name] = [];
-  //       }
-  //       results[name].push(net.address);
-  //     }
-  //   }
-  // }
-
-  // console.log(results);
-  console.log(nets);
-
-  event.reply("response", port);
+ipcMain.on("stop-server", async (event, arg) => {
+  try {
+    await server.stop();
+    event.reply("response");
+  } catch (error) {
+    event.reply("error", error);
+  }
 });

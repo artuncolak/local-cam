@@ -1,0 +1,18 @@
+@font-face {
+  font-family: roboto;
+  src: url("./fonts/roboto.woff2");
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+$sidebar-width: 300px;
+$font-family-sans-serif: "roboto";
+$primary: #2d4059;
+$link-color: #f07b3f;
+$box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
