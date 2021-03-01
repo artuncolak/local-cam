@@ -1,0 +1,13 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css");
+
+html,
+body {
+  height: 100%;
+  background-color: black;
+}
+
+.stream-image {
+  max-width: 100%;
+  height: 80%;
+  object-fit: contain;
+}

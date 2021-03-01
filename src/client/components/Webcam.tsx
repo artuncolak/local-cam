@@ -15,7 +15,7 @@ const Webcam = forwardRef((props, ref) => {
   const [error, setError] = useState<string>();
 
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvas = document.createElement("canvas");
 
   const webcamContext = useContext(WebcamContext);
 
@@ -30,9 +30,9 @@ const Webcam = forwardRef((props, ref) => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            // width: { ideal: 4096 },
-            // height: { ideal: 2160 },
-            // frameRate: 60,
+            width: { ideal: 4096 },
+            height: { ideal: 2160 },
+            frameRate: 60,
             deviceId: { ideal: webcamContext.id },
           },
         });
@@ -49,14 +49,14 @@ const Webcam = forwardRef((props, ref) => {
   }, [webcamContext.id, webcamContext.fps]);
 
   const captureImage = (): string => {
-    const context = canvasRef.current.getContext("2d");
+    const context = canvas.getContext("2d");
 
-    canvasRef.current.width = videoRef.current.videoWidth;
-    canvasRef.current.height = videoRef.current.videoHeight;
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
 
     context.drawImage(videoRef.current, 0, 0);
 
-    return canvasRef.current.toDataURL("image/webp");
+    return canvas.toDataURL("image/webp");
   };
 
   const loadStream = (stream: MediaStream) => {
@@ -73,7 +73,6 @@ const Webcam = forwardRef((props, ref) => {
 
   return (
     <>
-      <canvas style={{ display: "none" }} ref={canvasRef} />
       <video autoPlay ref={videoRef} className="rounded webcam" />
     </>
   );

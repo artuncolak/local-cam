@@ -9,16 +9,18 @@
       integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO"
       crossorigin="anonymous"
     ></script>
-    <title>Document</title>
+
+    <title>Local Cam</title>
+
+    <link rel="stylesheet" href="static/style.css" />
   </head>
   <body>
-    <img id="stream" alt="" />
+    <div
+      class="container h-100 d-flex justify-content-center align-items-center"
+    >
+      <img id="stream" class="stream-image rounded" alt="stream" />
+    </div>
 
-    <script>
-      const socket = io("/");
-      socket.on("start-stream", (data) => {
-        document.getElementById("stream").src = data;
-      });
-    </script>
+    <script src="static/script.js"></script>
   </body>
 </html>

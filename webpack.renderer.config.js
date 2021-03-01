@@ -42,6 +42,10 @@ module.exports = {
           from: path.resolve(__dirname, "src", "server/views"),
           to: path.resolve(__dirname, ".webpack/main", "views"),
         },
+        {
+          from: path.resolve(__dirname, "src", "server/public"),
+          to: path.resolve(__dirname, ".webpack/main", "public"),
+        },
       ],
     }),
   ],

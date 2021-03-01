@@ -20,6 +20,8 @@ class Server {
 
   constructor() {
     this.app = express();
+    this.app.use("/static", express.static(path.join(__dirname, "public")));
+
     this.app.set("view engine", "ejs");
     this.app.engine("ejs", ejs.__express);
     this.app.set("views", path.join(__dirname, "/views"));
@@ -42,7 +44,6 @@ class Server {
       socket.on("start-stream", (data) => {
         socket.broadcast.emit("start-stream", data);
       });
-      console.log("Socket Connected!");
     });
   }
 
@@ -67,15 +68,9 @@ class Server {
     return address;
   }
 
-  //TODO: Stop fonksiyonunu düzelt
-
-  // stop() {
-  //   if (!this.httpServer) {
-  //     throw new Error("Server is not started");
-  //   }
-  //   this.server.close();
-  //   this.server = null;
-  // }
+  stop() {
+    this.httpServer.close();
+  }
 
   async start(): Promise<ServerDetails> {
     const address = this.getAddress();
