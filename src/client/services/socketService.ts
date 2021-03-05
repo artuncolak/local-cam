@@ -8,7 +8,7 @@ class SocketService {
     this.socket.compress(true);
   }
 
-  startStream(image: string) {
+  stream(image: string) {
     this.socket.emit("start-stream", image);
   }
 }

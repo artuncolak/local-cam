@@ -1,0 +1,19 @@
+.menu-toggle {
+  margin-left: $sidebar-width;
+  height: $menu-toggle-height;
+  transition: $transition-base;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &.expand {
+    margin-left: 0px;
+  }
+
+  .icon {
+    transition: $transition-base;
+    &.reverse {
+      transform: rotate(180deg);
+    }
+  }
+}

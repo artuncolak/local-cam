@@ -7,9 +7,10 @@ import QrCode from "./QrCode";
 
 interface SidebarProps {
   addressUrl: string;
+  isHide: boolean;
 }
 
-export default function Sidebar({ addressUrl }: SidebarProps) {
+export default function Sidebar({ addressUrl, isHide }: SidebarProps) {
   const [mediaDevices, setMediaDevices] = useState<MediaDeviceInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -28,7 +29,7 @@ export default function Sidebar({ addressUrl }: SidebarProps) {
   }, []);
 
   return (
-    <div className="sidebar h-100 shadow">
+    <div className={`sidebar h-100 shadow ${isHide ? "hide" : ""}`}>
       {isLoading ? null : (
         <Accordion>
           <AccordionSelectDevices

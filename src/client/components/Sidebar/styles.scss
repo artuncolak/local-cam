@@ -1,6 +1,11 @@
 .sidebar {
+  transition: $transition-base;
   position: fixed;
   width: $sidebar-width;
+
+  &.hide {
+    transform: translateX(-$sidebar-width);
+  }
 }
 
 .accordion-select {

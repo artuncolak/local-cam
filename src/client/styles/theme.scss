@@ -10,9 +10,15 @@ body,
 }
 
 $sidebar-width: 300px;
+$menu-toggle-height: 50px;
+
+$btn-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 $font-family-sans-serif: "roboto";
-$primary: #2d4059;
-$link-color: #f07b3f;
+
+$primary: #363434;
+$link-color: #62929a;
+
 $box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";

@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Controls from "./components/Controls";
 import Sidebar from "./components/Sidebar";
+import MenuToggle from "./components/Sidebar/MenuToggle";
 import Webcam from "./components/Webcam";
 import serverService from "./services/serverService";
 import socketService from "./services/socketService";
@@ -10,13 +11,19 @@ export default function App() {
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [isStarting, setIsStarting] = useState<boolean>(false);
   const [serverDetails, setServerDetails] = useState<string>();
+  const [isSidebarHide, setIsSidebarHide] = useState<boolean>(false);
 
   const webcamRef = useRef(null);
 
-  let interval;
+  useEffect(() => {
+    const interval = setInterval(stream, 1000 / 30);
+    return () => clearInterval(interval);
+  });
 
   const stream = () => {
-    socketService.startStream(webcamRef.current.captureImage());
+    if (isStarted) {
+      socketService.stream(webcamRef.current.captureImage());
+    }
   };
 
   const handleServer = async () => {
@@ -26,12 +33,10 @@ export default function App() {
         await serverService.stop();
         setServerDetails(null);
         setIsStarted(false);
-        clearInterval(interval);
       } else {
         const { address, port } = await serverService.start();
         setServerDetails(`http://${address}:${port}`);
         setIsStarted(true);
-        interval = setInterval(stream, 1000 / 30);
       }
     } catch (error) {
       alert(error);
@@ -42,11 +47,22 @@ export default function App() {
 
   return (
     <div className="h-100">
-      <Sidebar addressUrl={serverDetails} />
-      <div className="content p-2 d-flex flex-column justify-content-center align-items-center">
+      <Sidebar addressUrl={serverDetails} isHide={isSidebarHide} />
+      <MenuToggle onToggle={(isToggled) => setIsSidebarHide(isToggled)} />
+
+      <div
+        className={`content p-2 d-flex flex-column justify-content-center align-items-center ${
+          isSidebarHide ? "expand" : ""
+        }`}
+      >
         <Webcam ref={webcamRef} />
       </div>
-      <div className="controls-container d-flex justify-content-center align-items-center py-3">
+
+      <div
+        className={`controls-container d-flex justify-content-center align-items-center py-3 ${
+          isSidebarHide ? "expand" : ""
+        }`}
+      >
         <Controls
           isStarted={isStarted}
           isStarting={isStarting}

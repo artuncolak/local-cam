@@ -37,7 +37,9 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "name": "local_cam"
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
@@ -69,6 +71,7 @@
     "@electron-forge/maker-deb": "^6.0.0-beta.54",
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-wix": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "@electron-forge/plugin-webpack": "6.0.0-beta.54",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
@@ -81,6 +84,7 @@
     "copy-webpack-plugin": "6",
     "css-loader": "^4.2.1",
     "electron": "11.3.0",
+    "electron-wix-msi": "^3.0.6",
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-import-resolver-typescript": "^2.4.0",

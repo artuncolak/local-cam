@@ -14,8 +14,13 @@ export default function Controls({
   return (
     <>
       <Button size="lg" onClick={handleServer}>
-        {isStarting ? <Spinner animation="border" /> : null}
-        {isStarted ? "Durdur" : "Başlat"}
+        {isStarting ? (
+          <Spinner animation="border" />
+        ) : isStarted ? (
+          "Durdur"
+        ) : (
+          "Başlat"
+        )}
       </Button>
     </>
   );
