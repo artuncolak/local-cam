@@ -3,8 +3,13 @@ import { Accordion } from "react-bootstrap";
 
 import { WebcamContext } from "../../WebcamContextProvider";
 import { AccordionSelectDevices } from "./AccordionSelect";
+import QrCode from "./QrCode";
 
-export default function Sidebar() {
+interface SidebarProps {
+  addressUrl: string;
+}
+
+export default function Sidebar({ addressUrl }: SidebarProps) {
   const [mediaDevices, setMediaDevices] = useState<MediaDeviceInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -16,6 +21,7 @@ export default function Sidebar() {
         await navigator.mediaDevices.enumerateDevices()
       ).filter((device) => device.kind === "videoinput");
       setMediaDevices(videoDevices);
+      webcamContext.setId(videoDevices[0].deviceId);
       setIsLoading(false);
     };
     getMediaDevices();
@@ -35,6 +41,7 @@ export default function Sidebar() {
           />
         </Accordion>
       )}
+      <QrCode addressUrl={addressUrl} />
     </div>
   );
 }

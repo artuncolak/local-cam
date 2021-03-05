@@ -31,7 +31,7 @@ export default function App() {
         const { address, port } = await serverService.start();
         setServerDetails(`http://${address}:${port}`);
         setIsStarted(true);
-        interval = setInterval(stream, 1000 / 60);
+        interval = setInterval(stream, 1000 / 30);
       }
     } catch (error) {
       alert(error);
@@ -42,13 +42,12 @@ export default function App() {
 
   return (
     <div className="h-100">
-      <Sidebar />
+      <Sidebar addressUrl={serverDetails} />
       <div className="content p-2 d-flex flex-column justify-content-center align-items-center">
         <Webcam ref={webcamRef} />
       </div>
       <div className="controls-container d-flex justify-content-center align-items-center py-3">
         <Controls
-          serverDetails={serverDetails}
           isStarted={isStarted}
           isStarting={isStarting}
           handleServer={handleServer}

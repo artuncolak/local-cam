@@ -17,7 +17,7 @@ const Webcam = forwardRef((props, ref) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvas = document.createElement("canvas");
 
-  const webcamContext = useContext(WebcamContext);
+  const { id } = useContext(WebcamContext);
 
   useImperativeHandle(ref, () => ({
     captureImage,
@@ -30,10 +30,10 @@ const Webcam = forwardRef((props, ref) => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            width: { ideal: 4096 },
-            height: { ideal: 2160 },
-            frameRate: 60,
-            deviceId: { ideal: webcamContext.id },
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
+            frameRate: { ideal: 60 },
+            deviceId: id,
           },
         });
       } catch (error) {
@@ -41,12 +41,12 @@ const Webcam = forwardRef((props, ref) => {
       } finally {
         setIsLoading(false);
       }
-      if (stream) {
+      if (stream && id) {
         loadStream(stream);
       }
     }
     getWebcam();
-  }, [webcamContext.id, webcamContext.fps]);
+  }, [id]);
 
   const captureImage = (): string => {
     const context = canvas.getContext("2d");
@@ -71,11 +71,7 @@ const Webcam = forwardRef((props, ref) => {
     return <h3 className="text-danger">{error}</h3>;
   }
 
-  return (
-    <>
-      <video autoPlay ref={videoRef} className="rounded webcam" />
-    </>
-  );
+  return <video autoPlay ref={videoRef} className="rounded webcam" />;
 });
 
 export default Webcam;

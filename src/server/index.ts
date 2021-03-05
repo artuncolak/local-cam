@@ -41,7 +41,7 @@ class Server {
 
   private openSocket(): void {
     this.io.on("connection", (socket) => {
-      socket.on("start-stream", (data) => {
+      socket.on("start-stream", async (data) => {
         socket.broadcast.emit("start-stream", data);
       });
     });
