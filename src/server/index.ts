@@ -1,7 +1,5 @@
-import cors from "cors";
 import ejs from "ejs";
 import express, { Express } from "express";
-import getPort from "get-port";
 import { Server as HttpServer } from "http";
 import { networkInterfaces } from "os";
 import path from "path";
@@ -80,7 +78,7 @@ class Server {
     }
 
     if (!this.port) {
-      this.port = await getPort({ port: 5000 });
+      this.port = 5000;
     }
 
     this.httpServer.listen(this.port);

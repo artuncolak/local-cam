@@ -1,0 +1,36 @@
+.accordion-select {
+  border-radius: 0px;
+  border-left: none;
+  border-right: none;
+
+  .card-header {
+    background-color: $body-bg;
+    &:hover {
+      cursor: pointer;
+      color: $link-color;
+    }
+    transition: $transition-base;
+
+    .icon {
+      transition: transform 0.2s ease-in-out;
+      &.toggled {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .card-body {
+    padding: 0px;
+  }
+
+  .list-group-item {
+    transition: color 0.2s ease-in-out;
+    &:hover {
+      color: $link-color;
+    }
+
+    &.selected {
+      color: $link-color;
+    }
+  }
+}

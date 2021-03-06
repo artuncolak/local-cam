@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Spinner } from "react-bootstrap";
 
-import { WebcamContext } from "../WebcamContextProvider";
+import { WebcamContext } from "../../WebcamContextProvider";
 
 const Webcam = forwardRef((props, ref) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -21,6 +21,7 @@ const Webcam = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     captureImage,
+    isLoading,
   }));
 
   useEffect(() => {
@@ -64,11 +65,19 @@ const Webcam = forwardRef((props, ref) => {
   };
 
   if (isLoading) {
-    return <Spinner animation="border" />;
+    return (
+      <div className="webcam">
+        <Spinner animation="border" />
+      </div>
+    );
   }
 
   if (error) {
-    return <h3 className="text-danger">{error}</h3>;
+    return (
+      <div className="webcam">
+        <h3 className="text-danger">{error}</h3>
+      </div>
+    );
   }
 
   return <video autoPlay ref={videoRef} className="rounded webcam" />;

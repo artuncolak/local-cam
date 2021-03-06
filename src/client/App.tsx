@@ -48,6 +48,7 @@ export default function App() {
   return (
     <div className="h-100">
       <Sidebar addressUrl={serverDetails} isHide={isSidebarHide} />
+
       <MenuToggle onToggle={(isToggled) => setIsSidebarHide(isToggled)} />
 
       <div
@@ -56,13 +57,7 @@ export default function App() {
         }`}
       >
         <Webcam ref={webcamRef} />
-      </div>
 
-      <div
-        className={`controls-container d-flex justify-content-center align-items-center py-3 ${
-          isSidebarHide ? "expand" : ""
-        }`}
-      >
         <Controls
           isStarted={isStarted}
           isStarting={isStarting}

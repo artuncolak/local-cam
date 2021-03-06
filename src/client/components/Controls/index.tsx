@@ -12,7 +12,7 @@ export default function Controls({
   handleServer,
 }: ControlsProps) {
   return (
-    <>
+    <div className="mt-3 controls-container w-100 text-center">
       <Button size="lg" onClick={handleServer}>
         {isStarting ? (
           <Spinner animation="border" />
@@ -22,6 +22,6 @@ export default function Controls({
           "Başlat"
         )}
       </Button>
-    </>
+    </div>
   );
 }
