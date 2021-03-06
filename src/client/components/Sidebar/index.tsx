@@ -33,7 +33,7 @@ export default function Sidebar({ addressUrl, isHide }: SidebarProps) {
       {isLoading ? null : (
         <Accordion>
           <AccordionSelectDevices
-            header="Kaynak"
+            header="Source"
             eventKey="0"
             items={mediaDevices}
             onSelect={(item) => {

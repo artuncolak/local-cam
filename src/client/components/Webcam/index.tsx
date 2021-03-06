@@ -36,7 +36,7 @@ const Webcam = forwardRef((props, ref) => {
           },
         });
       } catch (error) {
-        setError("Kameraya Ulaşılamıyor");
+        setError("Cannot Access to Camera");
       } finally {
         setIsLoading(false);
       }

@@ -17,9 +17,9 @@ export default function Controls({
         {isStarting ? (
           <Spinner animation="border" />
         ) : isStarted ? (
-          "Durdur"
+          "Stop Streaming"
         ) : (
-          "Başlat"
+          "Start Streaming"
         )}
       </Button>
     </div>
