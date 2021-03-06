@@ -11,6 +11,7 @@ const createWindow = (): void => {
     width: 1024,
     webPreferences: {
       nodeIntegration: true,
+      backgroundThrottling: false,
     },
   });
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
