@@ -47,23 +47,20 @@ class Server {
 
   private getAddress(): string {
     const nets = networkInterfaces();
-    let address;
+    const results = Object.create(null);
 
-    if (nets.Ethernet) {
-      nets.Ethernet.forEach((item) => {
-        if (item.family === "IPv4" && !item.internal) {
-          address = item.address;
+    for (const name of Object.keys(nets)) {
+      for (const net of nets[name]) {
+        if (net.family === "IPv4" && !net.internal) {
+          if (!results[name]) {
+            results[name] = [];
+          }
+          results[name].push(net.address);
         }
-      });
-    } else if (nets["Wi-Fi"]) {
-      nets["Wi-Fi"].forEach((item) => {
-        if (item.family === "IPv4" && !item.internal) {
-          address = item.address;
-        }
-      });
+      }
     }
 
-    return address;
+    return results[Object.keys(results)[0]];
   }
 
   stop() {
@@ -72,6 +69,8 @@ class Server {
 
   async start(): Promise<ServerDetails> {
     const address = this.getAddress();
+
+    console.log(address);
 
     if (!address) {
       throw new Error("LAN cannot be established");
